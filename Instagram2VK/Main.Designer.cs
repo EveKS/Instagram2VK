@@ -52,6 +52,12 @@
             this.tBOwner = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.bGetToken = new System.Windows.Forms.Button();
+            this.bPostToVK = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tBTimeFrom = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tBTimeTo = new System.Windows.Forms.TextBox();
             this.tCMainContainer.SuspendLayout();
             this.tabBrowser.SuspendLayout();
             this.tabOptions.SuspendLayout();
@@ -90,6 +96,12 @@
             // 
             // tabOptions
             // 
+            this.tabOptions.Controls.Add(this.tBTimeTo);
+            this.tabOptions.Controls.Add(this.label12);
+            this.tabOptions.Controls.Add(this.label11);
+            this.tabOptions.Controls.Add(this.tBTimeFrom);
+            this.tabOptions.Controls.Add(this.label10);
+            this.tabOptions.Controls.Add(this.bPostToVK);
             this.tabOptions.Controls.Add(this.bGetToken);
             this.tabOptions.Controls.Add(this.tBOwner);
             this.tabOptions.Controls.Add(this.label9);
@@ -124,9 +136,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(8, 3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(128, 37);
+            this.label1.Size = new System.Drawing.Size(105, 37);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Options";
+            this.label1.Text = "Опции";
             // 
             // bGenerateTocken
             // 
@@ -134,7 +146,7 @@
             this.bGenerateTocken.Name = "bGenerateTocken";
             this.bGenerateTocken.Size = new System.Drawing.Size(108, 29);
             this.bGenerateTocken.TabIndex = 1;
-            this.bGenerateTocken.Text = "Generate token";
+            this.bGenerateTocken.Text = "Создать токен";
             this.bGenerateTocken.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -204,11 +216,12 @@
             // 
             // bLoadContent
             // 
+            this.bLoadContent.Enabled = false;
             this.bLoadContent.Location = new System.Drawing.Point(328, 191);
             this.bLoadContent.Name = "bLoadContent";
-            this.bLoadContent.Size = new System.Drawing.Size(108, 29);
+            this.bLoadContent.Size = new System.Drawing.Size(120, 29);
             this.bLoadContent.TabIndex = 10;
-            this.bLoadContent.Text = "Load content";
+            this.bLoadContent.Text = "Загрузать контент";
             this.bLoadContent.UseVisualStyleBackColor = true;
             // 
             // tBUserId
@@ -286,8 +299,59 @@
             this.bGetToken.Name = "bGetToken";
             this.bGetToken.Size = new System.Drawing.Size(108, 29);
             this.bGetToken.TabIndex = 19;
-            this.bGetToken.Text = "Get token";
+            this.bGetToken.Text = "Получить токен";
             this.bGetToken.UseVisualStyleBackColor = true;
+            // 
+            // bPostToVK
+            // 
+            this.bPostToVK.Enabled = false;
+            this.bPostToVK.Location = new System.Drawing.Point(384, 253);
+            this.bPostToVK.Name = "bPostToVK";
+            this.bPostToVK.Size = new System.Drawing.Size(108, 29);
+            this.bPostToVK.TabIndex = 20;
+            this.bPostToVK.Text = "POST to VK";
+            this.bPostToVK.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 261);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(139, 13);
+            this.label10.TabIndex = 21;
+            this.label10.Text = "Время между постами от:";
+            // 
+            // tBTimeFrom
+            // 
+            this.tBTimeFrom.Location = new System.Drawing.Point(160, 258);
+            this.tBTimeFrom.Name = "tBTimeFrom";
+            this.tBTimeFrom.Size = new System.Drawing.Size(40, 20);
+            this.tBTimeFrom.TabIndex = 22;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(206, 261);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(22, 13);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "до:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(285, 261);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(37, 13);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "минут";
+            // 
+            // tBTimeTo
+            // 
+            this.tBTimeTo.Location = new System.Drawing.Point(234, 258);
+            this.tBTimeTo.Name = "tBTimeTo";
+            this.tBTimeTo.Size = new System.Drawing.Size(40, 20);
+            this.tBTimeTo.TabIndex = 26;
             // 
             // Main
             // 
@@ -331,6 +395,12 @@
         private System.Windows.Forms.TextBox tBIToken;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button bGetToken;
+        private System.Windows.Forms.Button bPostToVK;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tBTimeFrom;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tBTimeTo;
+        private System.Windows.Forms.Label label12;
     }
 }
 

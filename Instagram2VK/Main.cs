@@ -17,32 +17,40 @@ namespace Instagram2VK
             InitializeComponent();
 
             tCMainContainer.SelectTab("tabOptions");
+
             bGenerateTocken.Click += BGenerateTocken_Click;
             bGetToken.Click += BGetToken_Click;
-            bLoadContent.Click += BLoadContent_Click; ;
+            bLoadContent.Click += BLoadContent_Click;
+            bPostToVK.Click += BPostToVK_Click;
+        }
+
+        #region Events
+        private void BPostToVK_Click(object sender, EventArgs e)
+        {
+            BPostToVKEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private void BGetToken_Click(object sender, EventArgs e)
         {
-            BGetTocken?.Invoke(this, EventArgs.Empty);
+            BGetTockenEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private void BGenerateTocken_Click(object sender, EventArgs e)
         {
-            BGenerateTocken?.Invoke(this, EventArgs.Empty);
+            BGenerateTockenEvent?.Invoke(this, EventArgs.Empty);
         }
 
-        #region Events
         private void BLoadContent_Click(object sender, EventArgs e)
         {
-            BLoadContent?.Invoke(this, EventArgs.Empty);
+            BLoadContentEvent?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
         #region IMain
-        public event EventHandler BLoadContent;
-        public event EventHandler BGetTocken;
-        public event EventHandler BGenerateTocken;
+        public event EventHandler BLoadContentEvent;
+        public event EventHandler BGetTockenEvent;
+        public event EventHandler BGenerateTockenEvent;
+        public event EventHandler BPostToVKEvent;
 
         public WebBrowser Browser => webBrowser1;
 
@@ -116,7 +124,20 @@ namespace Instagram2VK
             }
         }
 
-        public bool TogleBtnGetToken
+        public string BtnLoadContentText
+        {
+            set
+            {
+                var settextAction = new Action(() => { bLoadContent.Text = value; });
+
+                if (bLoadContent.InvokeRequired)
+                    bLoadContent.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public bool ToggleBtnGetToken
         {
             set
             {
@@ -129,7 +150,7 @@ namespace Instagram2VK
             }
         }
 
-        public bool TogleBtnGenerateTocken
+        public bool ToggleBtnGenerateTocken
         {
             set
             {
@@ -142,7 +163,7 @@ namespace Instagram2VK
             }
         }
 
-        public bool TogleBtnLoadContent
+        public bool ToggleBtnLoadContent
         {
             set
             {
@@ -150,6 +171,19 @@ namespace Instagram2VK
 
                 if (bLoadContent.InvokeRequired)
                     bLoadContent.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public bool ToggleBtnPostToVK
+        {
+            set
+            {
+                var settextAction = new Action(() => { bPostToVK.Enabled = value; });
+
+                if (bPostToVK.InvokeRequired)
+                    bPostToVK.Invoke(settextAction);
                 else
                     settextAction();
             }

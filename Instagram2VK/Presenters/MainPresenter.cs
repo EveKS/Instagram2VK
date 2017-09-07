@@ -35,56 +35,111 @@ namespace Instagram2VK.Presenters
             _mainService = mainService;
             _messegeService = messegeService;
 
-            _view.BLoadContent += _view_BLoadContent;
-            _view.BGetTocken += _view_BGetTocken;
-            _view.BGenerateTocken += _view_BGenerateTocken;
+            _view.BLoadContentEvent += _view_BLoadContent;
+            _view.BGetTockenEvent += _view_BGetTocken;
+            _view.BGenerateTockenEvent += _view_BGenerateTocken;
+            _view.BPostToVKEvent += _view_BPostToVKEvent;
+        }
+
+        private void _view_BPostToVKEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                _view.ToggleBtnLoadContent = false;
+                _view.ToggleBtnPostToVK = false;
+
+
+            }
+            catch (Exception ex)
+            {
+                _messegeService.ShowError(ex.Message);
+            }
+            finally
+            {
+                _view.ToggleBtnLoadContent = true;
+                _view.ToggleBtnPostToVK = true;
+            }
         }
 
         private void _view_BGetTocken(object sender, EventArgs e)
         {
-            _view.TogleBtnGetToken = false;
-            var responseString = _view.Browser.Url.AbsoluteUri;
-            var userInfo = _mainService.GetUserInfo(responseString);
+            try
+            {
+                _view.ToggleBtnGetToken = false;
 
-            access_token = userInfo.access_token;
-            _view.Token = access_token;
+                var responseString = _view.Browser.Url.AbsoluteUri;
+                var userInfo = _mainService.GetUserInfo(responseString);
 
-            user_id = userInfo.user_id;
-            _view.UserId = user_id;
+                access_token = userInfo.access_token;
+                _view.Token = access_token;
 
-            expires_in = userInfo.expires_in;
-            _view.ExpiresIn = expires_in;
+                user_id = userInfo.user_id;
+                _view.UserId = user_id;
 
-            _view.TogleBtnGetToken = true;
-            _view.TogleBtnLoadContent = true;
+                expires_in = userInfo.expires_in;
+                _view.ExpiresIn = expires_in;
+            }
+            catch (Exception ex)
+            {
+                _messegeService.ShowError(ex.Message);
+            }
+            finally
+            {
+                _view.ToggleBtnGetToken = true;
+            }
         }
 
         private void _view_BGenerateTocken(object sender, EventArgs e)
         {
-            _view.Browser.ScriptErrorsSuppressed = true;
-            _view.Browser.Navigate(_mainService.AutorizeString);
+            try
+            {
+                _view.ToggleBtnGenerateTocken = false;
 
-            _view.TabContainer.SelectTab("tabBrowser");
-            _view.TogleBtnGenerateTocken = false;
-            _view.TogleBtnGetToken = true;
+                _view.Browser.ScriptErrorsSuppressed = true;
+                _view.Browser.Navigate(_mainService.AutorizeString);
+
+                _view.TabContainer.SelectTab("tabBrowser");
+            }
+            catch (Exception ex)
+            {
+                _messegeService.ShowError(ex.Message);
+            }
+            finally
+            {
+                _view.ToggleBtnGenerateTocken = true;
+                _view.ToggleBtnGetToken = true;
+            }
         }
 
         private async void _view_BLoadContent(object sender, EventArgs e)
         {
-            _view.TogleBtnLoadContent = false;
-            var contentLoad = await _instagramService.InstagramLoadAsync(_view.InstagramPage);
-            if(contentLoad != null)
+            try
             {
-                token = contentLoad.Token;
-                _view.IToken = token;
+                _view.ToggleBtnLoadContent = false;
 
-                owner = contentLoad.Owner;
-                _view.IOwner = owner;
+                var contentLoad = await _instagramService.InstagramLoadAsync(_view.InstagramPage);
+                if (contentLoad != null)
+                {
+                    token = contentLoad.Token;
+                    _view.IToken = token;
 
-                vkItems = contentLoad.VkItemViewModels;
+                    owner = contentLoad.Owner;
+                    _view.IOwner = owner;
+
+                    vkItems = contentLoad.VkItemViewModels;
+                }
             }
-
-            _view.TogleBtnLoadContent = true;
+            catch (Exception ex)
+            {
+                _messegeService.ShowError(ex.Message);
+            }
+            finally
+            {
+                _view.ToggleBtnPostToVK = true;
+                _view.ToggleBtnLoadContent = true;
+                _view.BtnLoadContentText = "Загрузить еще";
+                _view.ToggleBtnLoadContent = true;
+            }
         }
     }
 }

@@ -6,20 +6,23 @@ namespace Instagram2VK
     public interface IMain
     {
         WebBrowser Browser { get; }
+        string BtnLoadContentText { set; }
         string ExpiresIn { set; }
         string InstagramPage { get; }
         string IOwner { set; }
         string IToken { set; }
         string QueryId { get; }
         TabControl TabContainer { get; }
-        bool TogleBtnGenerateTocken { set; }
-        bool TogleBtnGetToken { set; }
-        bool TogleBtnLoadContent { set; }
+        bool ToggleBtnGenerateTocken { set; }
+        bool ToggleBtnGetToken { set; }
+        bool ToggleBtnLoadContent { set; }
+        bool ToggleBtnPostToVK { set; }
         string Token { set; }
         string UserId { set; }
 
-        event EventHandler BGenerateTocken;
-        event EventHandler BGetTocken;
-        event EventHandler BLoadContent;
+        event EventHandler BGenerateTockenEvent;
+        event EventHandler BGetTockenEvent;
+        event EventHandler BLoadContentEvent;
+        event EventHandler BPostToVKEvent;
     }
 }
