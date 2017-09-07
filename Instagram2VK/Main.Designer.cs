@@ -33,7 +33,7 @@
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tabOptions = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.bGetTocken = new System.Windows.Forms.Button();
+            this.bGenerateTocken = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tBToken = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,6 +51,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.tBOwner = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.bGetToken = new System.Windows.Forms.Button();
             this.tCMainContainer.SuspendLayout();
             this.tabBrowser.SuspendLayout();
             this.tabOptions.SuspendLayout();
@@ -89,6 +90,7 @@
             // 
             // tabOptions
             // 
+            this.tabOptions.Controls.Add(this.bGetToken);
             this.tabOptions.Controls.Add(this.tBOwner);
             this.tabOptions.Controls.Add(this.label9);
             this.tabOptions.Controls.Add(this.tBIToken);
@@ -106,7 +108,7 @@
             this.tabOptions.Controls.Add(this.label3);
             this.tabOptions.Controls.Add(this.tBToken);
             this.tabOptions.Controls.Add(this.label2);
-            this.tabOptions.Controls.Add(this.bGetTocken);
+            this.tabOptions.Controls.Add(this.bGenerateTocken);
             this.tabOptions.Controls.Add(this.label1);
             this.tabOptions.Location = new System.Drawing.Point(4, 22);
             this.tabOptions.Name = "tabOptions";
@@ -126,19 +128,19 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Options";
             // 
-            // bGetTocken
+            // bGenerateTocken
             // 
-            this.bGetTocken.Location = new System.Drawing.Point(15, 54);
-            this.bGetTocken.Name = "bGetTocken";
-            this.bGetTocken.Size = new System.Drawing.Size(108, 29);
-            this.bGetTocken.TabIndex = 1;
-            this.bGetTocken.Text = "Get token";
-            this.bGetTocken.UseVisualStyleBackColor = true;
+            this.bGenerateTocken.Location = new System.Drawing.Point(15, 54);
+            this.bGenerateTocken.Name = "bGenerateTocken";
+            this.bGenerateTocken.Size = new System.Drawing.Size(108, 29);
+            this.bGenerateTocken.TabIndex = 1;
+            this.bGenerateTocken.Text = "Generate token";
+            this.bGenerateTocken.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 103);
+            this.label2.Location = new System.Drawing.Point(558, 103);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 2;
@@ -146,7 +148,8 @@
             // 
             // tBToken
             // 
-            this.tBToken.Location = new System.Drawing.Point(92, 96);
+            this.tBToken.Enabled = false;
+            this.tBToken.Location = new System.Drawing.Point(638, 96);
             this.tBToken.Name = "tBToken";
             this.tBToken.Size = new System.Drawing.Size(230, 20);
             this.tBToken.TabIndex = 3;
@@ -276,6 +279,16 @@
             this.label9.TabIndex = 17;
             this.label9.Text = "Owner:";
             // 
+            // bGetToken
+            // 
+            this.bGetToken.Enabled = false;
+            this.bGetToken.Location = new System.Drawing.Point(214, 54);
+            this.bGetToken.Name = "bGetToken";
+            this.bGetToken.Size = new System.Drawing.Size(108, 29);
+            this.bGetToken.TabIndex = 19;
+            this.bGetToken.Text = "Get token";
+            this.bGetToken.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,7 +314,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tBToken;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button bGetTocken;
+        private System.Windows.Forms.Button bGenerateTocken;
         private System.Windows.Forms.TextBox tBQueryId;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button bLoadContent;
@@ -317,6 +330,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tBIToken;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button bGetToken;
     }
 }
 

@@ -149,6 +149,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMain.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +208,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Html\HtmlService.cs" />
     <Compile Include="Services\Html\IHtmlService.cs" />
+    <Compile Include="Services\IMainService.cs" />
     <Compile Include="Services\Instagram\IInstagramService.cs" />
     <Compile Include="Services\Instagram\InstagramService.cs" />
     <Compile Include="Services\Json\IJsonService.cs" />

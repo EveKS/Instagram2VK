@@ -10,14 +10,6 @@ using System.Windows.Forms;
 
 namespace Instagram2VK
 {
-    public interface IMain
-    {
-        string QueryId { get; }
-        string InstagramPage { get; }
-
-        event EventHandler BLoadContent;
-    }
-
     public partial class Main : Form, IMain
     {
         public Main()
@@ -25,7 +17,19 @@ namespace Instagram2VK
             InitializeComponent();
 
             tCMainContainer.SelectTab("tabOptions");
+            bGenerateTocken.Click += BGenerateTocken_Click;
+            bGetToken.Click += BGetToken_Click;
             bLoadContent.Click += BLoadContent_Click; ;
+        }
+
+        private void BGetToken_Click(object sender, EventArgs e)
+        {
+            BGetTocken?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void BGenerateTocken_Click(object sender, EventArgs e)
+        {
+            BGenerateTocken?.Invoke(this, EventArgs.Empty);
         }
 
         #region Events
@@ -37,6 +41,8 @@ namespace Instagram2VK
 
         #region IMain
         public event EventHandler BLoadContent;
+        public event EventHandler BGetTocken;
+        public event EventHandler BGenerateTocken;
 
         public WebBrowser Browser => webBrowser1;
 
@@ -44,6 +50,33 @@ namespace Instagram2VK
 
         public string QueryId => tBQueryId.Text;
         public string InstagramPage => tBInstagramPage.Text;
+
+        public bool TogleBtnGetToken
+        {
+            set
+            {
+                var settextAction = new Action(() => { bGetToken.Enabled = value; });
+
+                if (bGetToken.InvokeRequired)
+                    bGetToken.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+
+        public bool TogleBtnGenerateTocken
+        {
+            set
+            {
+                var settextAction = new Action(() => { bGenerateTocken.Enabled = value; });
+
+                if (bGenerateTocken.InvokeRequired)
+                    bGenerateTocken.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
         #endregion
     }
 }

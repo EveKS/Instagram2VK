@@ -1,4 +1,5 @@
 ﻿using Instagram2VK.Presenters;
+using Instagram2VK.Services;
 using Instagram2VK.Services.Instagram;
 using Instagram2VK.Services.Message;
 using System;
@@ -21,10 +22,11 @@ namespace Instagram2VK
             Application.SetCompatibleTextRenderingDefault(false);
 
             Main form = new Main();
-            IMessageService service = new MessageService();
-            IInstagramService manager = new InstagramService();
+            IMainService mainService = new MainService();
+            IMessageService messageService = new MessageService();
+            IInstagramService instagramService = new InstagramService();
 
-            MainPresenter presenter = new MainPresenter(form, manager, service);
+            MainPresenter presenter = new MainPresenter(form, instagramService, mainService, messageService);
 
             Application.Run(form);
         }

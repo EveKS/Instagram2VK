@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Instagram2VK.Services
 {
-    class MainService
+    class MainService : IMainService
     {
         #region options
         const string client_id = "5979140";
@@ -21,7 +21,7 @@ namespace Instagram2VK.Services
         public string AutorizeString =>
             $@"https://oauth.vk.com/authorize?client_id={client_id}&display={display}&redirect_uri={redirect_uri}&scope={scope}&response_type={response_type}&v={version}";
 
-        public (string access_token, string expires_in, string user_id) GetUserInfo(string tokenString)
+        (string access_token, string expires_in, string user_id) IMainService.GetUserInfo(string tokenString)
         {
             string access_token =
                 @"(access_token)=(?<access_token>[^&]+)";
