@@ -43,6 +43,34 @@ namespace Instagram2VK.Presenters
             _view.BGetTockenEvent += _view_BGetTocken;
             _view.BGenerateTockenEvent += _view_BGenerateTocken;
             _view.BPostToVKEvent += _view_BPostToVKEvent;
+
+            _vkService.AppendProgressMaxValue += _vkService_AppendProgressMaxValue;
+            _vkService.AppendProgressMessage += _vkService_AppendProgressMessage;
+            _vkService.AppendProgressValue += _vkService_AppendProgressValue;
+        }
+
+        private void _vkService_AppendProgressValue(object sender, EventArgs e)
+        {
+            if (sender is int)
+            {
+                _view.SetMessageValue = (int)sender;
+            }
+        }
+
+        private void _vkService_AppendProgressMessage(object sender, EventArgs e)
+        {
+            if (sender is string)
+            {
+                _view.SetMessageProgress = (string)sender;
+            }
+        }
+
+        private void _vkService_AppendProgressMaxValue(object sender, EventArgs e)
+        {
+            if (sender is int)
+            {
+                _view.SetMessageMaxValue = (int)sender;
+            }
         }
 
         private async void _view_BPostToVKEvent(object sender, EventArgs e)

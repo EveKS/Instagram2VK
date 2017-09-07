@@ -191,6 +191,45 @@ namespace Instagram2VK
                     settextAction();
             }
         }
+
+        public string SetMessageProgress
+        {
+            set
+            {
+                var settextAction = new Action(() => { lPostingProgress.Text = value; });
+
+                if (lPostingProgress.InvokeRequired)
+                    lPostingProgress.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public int SetMessageMaxValue
+        {
+            set
+            {
+                var settextAction = new Action(() => { pBPostingProgress.Maximum = value; });
+
+                if (pBPostingProgress.InvokeRequired)
+                    pBPostingProgress.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public int SetMessageValue
+        {
+            set
+            {
+                var settextAction = new Action(() => { pBPostingProgress.Value = value; });
+
+                if (pBPostingProgress.InvokeRequired)
+                    pBPostingProgress.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
         #endregion
     }
 }

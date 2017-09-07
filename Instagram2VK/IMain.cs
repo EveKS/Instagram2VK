@@ -12,6 +12,9 @@ namespace Instagram2VK
         string IOwner { set; }
         string IToken { set; }
         string QueryId { get; }
+        int SetMessageMaxValue { set; }
+        string SetMessageProgress { set; }
+        int SetMessageValue { set; }
         TabControl TabContainer { get; }
         string TimeFrom { get; }
         string TimeTo { get; }

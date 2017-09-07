@@ -11,6 +11,10 @@ namespace Instagram2VK.Services.VK
 {
     partial class VkService : IVkService
     {
+        public event EventHandler AppendProgressMessage;
+        public event EventHandler AppendProgressMaxValue;
+        public event EventHandler AppendProgressValue;
+
         private static Random _rnd;
         private IHtmlService _htmlService;
         private IJsonService _jsonService;
@@ -37,6 +41,12 @@ namespace Instagram2VK.Services.VK
             int timeFrom, int timeTo,
             IEnumerable<VkItemViewModel> vkItems)
         {
+            var itemCount = vkItems.Count();
+
+            AppendProgressMaxValue(itemCount, EventArgs.Empty);
+            AppendProgressValue(0, EventArgs.Empty);
+            AppendProgressMessage(string.Format("{0}/{1}", 0, itemCount), EventArgs.Empty);
+
             var addTime = 30 * 60;
             DateTime dateNow = DateTime.Now;
             long unixTime = ((DateTimeOffset)dateNow).ToUnixTimeSeconds();
@@ -51,6 +61,7 @@ namespace Instagram2VK.Services.VK
                 // настройка времени
                 vkItems = SetTimeAsync(group_id, count, unixTime, addTime, timeList, timeFrom, timeTo, vkItems);
 
+                var index = 0;
                 foreach (var item in vkItems)
                 {
                     var type = string.Empty;
@@ -62,11 +73,7 @@ namespace Instagram2VK.Services.VK
 
                     var wallPost = await WallPostAsync(access_token, group_id, item.Text, item.PublishDate.ToString(), type, item.Photo?.ToArray());
 
-                    if (!string.IsNullOrWhiteSpace(wallPost) && !wallPost.Contains("error"))
-                    {
-
-                    }
-                    else
+                    if (string.IsNullOrWhiteSpace(wallPost) && wallPost.Contains("error"))
                     {
                         //await _telegramService.SendMessage($"{user.UserName} error: {string.Concat(wallPost.Take(2500))}");
 
@@ -75,6 +82,9 @@ namespace Instagram2VK.Services.VK
                             break;
                         }
                     }
+
+                    AppendProgressValue(++index, EventArgs.Empty);
+                    AppendProgressMessage(string.Format("{0}/{1}", index, itemCount), EventArgs.Empty);
                 }
             }
             else
