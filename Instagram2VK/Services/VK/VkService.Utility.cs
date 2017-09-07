@@ -201,28 +201,60 @@ namespace Instagram2VK.Services.VK
             {
                 Stopwatch delay = Stopwatch.StartNew();
 
-
-                using (var stream = await _htmlService.GetStreamAsync(file_url, HttpCompletionOption.ResponseHeadersRead))
-                using (var form = new MultipartFormDataContent
+                using (HttpClientHandler clientHandler = new HttpClientHandler()
                 {
-                    { new StringContent(access_token, Encoding.UTF8), "access_token" },
-                    { new StringContent(VERSION, Encoding.UTF8), "v" }
+                    AllowAutoRedirect = true,
+                    MaxAutomaticRedirections = 15,
+                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.None,
+                    ClientCertificateOptions = ClientCertificateOption.Manual,
                 })
                 {
-                    var name = Path.GetFileName(file_url);
-                    using (var streamContent = CreateFileContent(stream, name, file_type))
+                    using (HttpClient httpClient = new HttpClient(clientHandler))
                     {
-                        form.Add(streamContent);
-                        result = await _htmlService.PostStreamAsync(upload_url, form);
+                        //httpClient.MaxResponseContentBufferSize = 2048;
+                        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Connection", "keep-alive");
+                        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml");
+                        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate, sdch");
+                        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
+                        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
+
+                        using (var responseContent = await httpClient.GetAsync(new Uri(file_url), HttpCompletionOption.ResponseHeadersRead))
+                        {
+                            if (responseContent.IsSuccessStatusCode)
+                            {
+                                using (var stream = await responseContent.Content.ReadAsStreamAsync())
+                                //using (Stream stream = await httpClient.GetStreamAsync(new Uri(file_url)))
+                                using (var form = new MultipartFormDataContent
+                                        {
+                                            { new StringContent(access_token, Encoding.UTF8), "access_token" },
+                                            { new StringContent(VERSION, Encoding.UTF8), "v" }
+                                        })
+                                {
+                                    var name = Path.GetFileName(file_url);
+                                    using (var streamContent = CreateFileContent(stream, name, file_type))
+                                    {
+                                        form.Add(streamContent);
+
+                                        using (HttpResponseMessage response = await httpClient.PostAsync(upload_url, form))
+                                        using (HttpContent content = response.Content)
+                                        {
+                                            result = await content.ReadAsStringAsync();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        delay.Stop();
+
+                        var delayTime = DELAY - delay.Elapsed.TotalMilliseconds;
+                        if (delayTime > 0)
+                        {
+                            await Task.Delay((int)delayTime);
+                        }
                     }
                 }
 
-                delay.Stop();
-                var delayTime = DELAY - delay.Elapsed.TotalMilliseconds;
-                if (delayTime > 0)
-                {
-                    await Task.Delay((int)delayTime);
-                }
             }
 
             return result;

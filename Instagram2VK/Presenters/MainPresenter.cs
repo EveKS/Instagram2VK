@@ -1,6 +1,7 @@
 ﻿using Instagram2VK.Services;
 using Instagram2VK.Services.Instagram;
 using Instagram2VK.Services.Message;
+using Instagram2VK.Services.VK;
 using Instagram2VK.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Instagram2VK.Presenters
         private readonly IMain _view;
         private readonly IInstagramService _instagramService;
         private readonly IMainService _mainService;
+        private readonly IVkService _vkService;
         private readonly IMessageService _messegeService;
 
         private string access_token;
@@ -28,11 +30,13 @@ namespace Instagram2VK.Presenters
         public MainPresenter(IMain view,
             IInstagramService instagramService,
             IMainService mainService,
+            IVkService vkService,
             IMessageService messegeService)
         {
             _view = view;
             _instagramService = instagramService;
             _mainService = mainService;
+            _vkService = vkService;
             _messegeService = messegeService;
 
             _view.BLoadContentEvent += _view_BLoadContent;
@@ -41,14 +45,33 @@ namespace Instagram2VK.Presenters
             _view.BPostToVKEvent += _view_BPostToVKEvent;
         }
 
-        private void _view_BPostToVKEvent(object sender, EventArgs e)
+        private async void _view_BPostToVKEvent(object sender, EventArgs e)
         {
             try
             {
                 _view.ToggleBtnLoadContent = false;
                 _view.ToggleBtnPostToVK = false;
 
+                int timeFrom, timeTo;
+                var groupId = _view.VkGroup;
+                if(!int.TryParse(_view.TimeFrom, out timeFrom))
+                {
+                    _messegeService.ShowExclamation("Введите корректное значение времени между постами");
+                    return;
+                }
 
+                if (!int.TryParse(_view.TimeTo, out timeTo))
+                {
+                    _messegeService.ShowExclamation("Введите корректное значение времени между постами");
+                    return;
+                }
+
+                // filters
+                vkItems = vkItems.Where(item =>
+                   !item.Text.Contains("www") && !item.Text.Contains("http") &&
+                   !item.Text.Contains(".blog"));
+
+                await _vkService.SetWallAsync(groupId, access_token, timeFrom, timeTo, vkItems);
             }
             catch (Exception ex)
             {
@@ -86,6 +109,7 @@ namespace Instagram2VK.Presenters
             finally
             {
                 _view.ToggleBtnGetToken = true;
+                _view.ToggleBtnLoadContent = true;
             }
         }
 

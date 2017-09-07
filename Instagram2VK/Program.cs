@@ -2,6 +2,7 @@
 using Instagram2VK.Services;
 using Instagram2VK.Services.Instagram;
 using Instagram2VK.Services.Message;
+using Instagram2VK.Services.VK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,10 @@ namespace Instagram2VK
             Main form = new Main();
             IMainService mainService = new MainService();
             IMessageService messageService = new MessageService();
+            IVkService vkService = new VkService();
             IInstagramService instagramService = new InstagramService();
 
-            MainPresenter presenter = new MainPresenter(form, instagramService, mainService, messageService);
+            MainPresenter presenter = new MainPresenter(form, instagramService, mainService, vkService, messageService);
 
             Application.Run(form);
         }

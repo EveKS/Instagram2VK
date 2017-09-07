@@ -12,14 +12,12 @@ namespace Instagram2VK.Services.VK
     partial class VkService : IVkService
     {
         private static Random _rnd;
-        private readonly string access_token;
         private IHtmlService _htmlService;
         private IJsonService _jsonService;
 
-        public VkService(string access_token)
+        public VkService()
         {
             _rnd = new Random();
-            this.access_token = access_token;
 
             _htmlService = new HtmlService();
             _jsonService = new JsonService();
@@ -35,7 +33,8 @@ namespace Instagram2VK.Services.VK
         /// <param name="timeTo"></param>
         /// <param name="vkItems"></param>
         /// <returns></returns>
-        async Task IVkService.SetWallAsync(string group_id, int timeFrom, int timeTo,
+        async Task IVkService.SetWallAsync(string group_id, string access_token,
+            int timeFrom, int timeTo,
             IEnumerable<VkItemViewModel> vkItems)
         {
             var addTime = 30 * 60;

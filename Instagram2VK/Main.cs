@@ -58,6 +58,9 @@ namespace Instagram2VK
 
         public string QueryId => tBQueryId.Text;
         public string InstagramPage => tBInstagramPage.Text;
+        public string VkGroup => tBVkGroup.Text;
+        public string TimeFrom => tBTimeFrom.Text;
+        public string TimeTo => tBTimeTo.Text;
 
         public string Token
         {

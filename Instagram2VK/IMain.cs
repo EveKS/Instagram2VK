@@ -13,12 +13,15 @@ namespace Instagram2VK
         string IToken { set; }
         string QueryId { get; }
         TabControl TabContainer { get; }
+        string TimeFrom { get; }
+        string TimeTo { get; }
         bool ToggleBtnGenerateTocken { set; }
         bool ToggleBtnGetToken { set; }
         bool ToggleBtnLoadContent { set; }
         bool ToggleBtnPostToVK { set; }
         string Token { set; }
         string UserId { set; }
+        string VkGroup { get; }
 
         event EventHandler BGenerateTockenEvent;
         event EventHandler BGetTockenEvent;

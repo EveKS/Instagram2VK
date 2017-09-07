@@ -35,14 +35,6 @@ namespace Instagram2VK.Services.Html
                     {
                         return await content.ReadAsStringAsync();
                     }
-
-                    //using (HttpResponseMessage response = await httpClient.GetAsync(new Uri(url)))
-                    //using (var responseStream = await response.Content.ReadAsStreamAsync())
-                    //using (var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress))
-                    //using (var streamReader = new StreamReader(decompressedStream))
-                    //{
-                    //    return await streamReader.ReadToEndAsync();
-                    //}
                 }
             }
         }
