@@ -6,7 +6,7 @@ namespace Instagram2VK.Services.Html
 {
     interface IHtmlService
     {
-        Task<string> GetAsync(string url, HttpCompletionOption httpCompletionOption = default(HttpCompletionOption));
+        Task<string> GetAsync(string url);
         Task<Stream> GetStreamAsync(string url, HttpCompletionOption httpCompletionOption = default(HttpCompletionOption));
         Task<string> PostAsync(string url, FormUrlEncodedContent formContent);
         Task<string> PostStreamAsync(string url, MultipartFormDataContent formContent);

@@ -51,6 +51,71 @@ namespace Instagram2VK
         public string QueryId => tBQueryId.Text;
         public string InstagramPage => tBInstagramPage.Text;
 
+        public string Token
+        {
+            set
+            {
+                var settextAction = new Action(() => { tBToken.Text = value; });
+
+                if (tBToken.InvokeRequired)
+                    tBToken.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public string UserId
+        {
+            set
+            {
+                var settextAction = new Action(() => { tBUserId.Text = value; });
+
+                if (tBUserId.InvokeRequired)
+                    tBUserId.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public string ExpiresIn
+        {
+            set
+            {
+                var settextAction = new Action(() => { tBExpiresIn.Text = value; });
+
+                if (tBExpiresIn.InvokeRequired)
+                    tBExpiresIn.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public string IToken
+        {
+            set
+            {
+                var settextAction = new Action(() => { tBIToken.Text = value; });
+
+                if (tBIToken.InvokeRequired)
+                    tBIToken.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public string IOwner
+        {
+            set
+            {
+                var settextAction = new Action(() => { tBOwner.Text = value; });
+
+                if (tBOwner.InvokeRequired)
+                    tBOwner.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
         public bool TogleBtnGetToken
         {
             set
@@ -64,7 +129,6 @@ namespace Instagram2VK
             }
         }
 
-
         public bool TogleBtnGenerateTocken
         {
             set
@@ -73,6 +137,19 @@ namespace Instagram2VK
 
                 if (bGenerateTocken.InvokeRequired)
                     bGenerateTocken.Invoke(settextAction);
+                else
+                    settextAction();
+            }
+        }
+
+        public bool TogleBtnLoadContent
+        {
+            set
+            {
+                var settextAction = new Action(() => { bLoadContent.Enabled = value; });
+
+                if (bLoadContent.InvokeRequired)
+                    bLoadContent.Invoke(settextAction);
                 else
                     settextAction();
             }

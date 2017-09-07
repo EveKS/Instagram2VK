@@ -11,11 +11,9 @@ namespace Instagram2VK.Services.Html
 {
     class HtmlService : IHtmlService
     {
-        private HttpClientHandler _clientHandler;
-
-        public HtmlService()
+        private HttpClientHandler Handler()
         {
-            _clientHandler = new HttpClientHandler()
+            return new HttpClientHandler()
             {
                 AllowAutoRedirect = true,
                 MaxAutomaticRedirections = 15,
@@ -26,9 +24,9 @@ namespace Instagram2VK.Services.Html
 
         async Task<string> IHtmlService.PostAsync(string url, FormUrlEncodedContent formContent)
         {
-            using (_clientHandler)
+            using (var hendler = Handler())
             {
-                using (var httpClient = new HttpClient(_clientHandler))
+                using (var httpClient = new HttpClient(hendler))
                 {
                     SetClientHeaders(httpClient);
 
@@ -37,15 +35,23 @@ namespace Instagram2VK.Services.Html
                     {
                         return await content.ReadAsStringAsync();
                     }
+
+                    //using (HttpResponseMessage response = await httpClient.GetAsync(new Uri(url)))
+                    //using (var responseStream = await response.Content.ReadAsStreamAsync())
+                    //using (var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress))
+                    //using (var streamReader = new StreamReader(decompressedStream))
+                    //{
+                    //    return await streamReader.ReadToEndAsync();
+                    //}
                 }
             }
         }
 
         async Task<string> IHtmlService.PostStreamAsync(string url, MultipartFormDataContent formContent)
         {
-            using (_clientHandler)
+            using (var hendler = Handler())
             {
-                using (var httpClient = new HttpClient(_clientHandler))
+                using (var httpClient = new HttpClient(hendler))
                 {
                     SetClientHeaders(httpClient);
 
@@ -58,15 +64,15 @@ namespace Instagram2VK.Services.Html
             }
         }
 
-        async Task<string> IHtmlService.GetAsync(string url, HttpCompletionOption httpCompletionOption)
+        async Task<string> IHtmlService.GetAsync(string url)
         {
-            using (_clientHandler)
+            using (var hendler = Handler())
             {
-                using (var httpClient = new HttpClient(_clientHandler))
+                using (var httpClient = new HttpClient(hendler))
                 {
                     SetClientHeaders(httpClient);
 
-                    using (HttpResponseMessage response = await httpClient.GetAsync(url, httpCompletionOption))
+                    using (HttpResponseMessage response = await httpClient.GetAsync(url))
                     using (HttpContent content = response.Content)
                     {
                         return await content.ReadAsStringAsync();
@@ -77,9 +83,9 @@ namespace Instagram2VK.Services.Html
 
         async Task<Stream> IHtmlService.GetStreamAsync(string url, HttpCompletionOption httpCompletionOption)
         {
-            using (_clientHandler)
+            using (var hendler = Handler())
             {
-                using (var httpClient = new HttpClient(_clientHandler))
+                using (var httpClient = new HttpClient(hendler))
                 {
                     SetClientHeaders(httpClient);
                     using (var responseContent = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
