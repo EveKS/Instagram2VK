@@ -47,5 +47,18 @@ namespace Instagram2VK.Services
 
             return (accessToken, userId, expiresIn);
         }
+
+        string IMainService.GetDomainString(string groupId)
+        {
+            string group_id_pattern =
+                @"((https:\/\/vk.com\/)|(http:\/\/vk.com\/))?(club|public)?(?<group_id>[^\s^,^\n]+)";
+
+            var group_id = Regex.Matches(groupId, group_id_pattern, RegexOptions.CultureInvariant)
+                .OfType<Match>()
+                .Select(m => m.Groups["group_id"].Value)
+                .FirstOrDefault();
+
+            return group_id;
+        }
     }
 }

@@ -23,6 +23,8 @@ namespace Instagram2VK.Presenters
         private string user_id;
         private string expires_in;
 
+        private bool isNext;
+
         private string token;
         private string owner;
         private IEnumerable<VkItemViewModel> vkItems;
@@ -80,8 +82,14 @@ namespace Instagram2VK.Presenters
                 _view.ToggleBtnLoadContent = false;
                 _view.ToggleBtnPostToVK = false;
 
-                int timeFrom, timeTo;
                 var groupId = _view.VkGroup;
+                if (string.IsNullOrWhiteSpace(groupId))
+                {
+                    _messegeService.ShowExclamation("Укажите ВК группу");
+                    return;
+                }
+
+                int timeFrom, timeTo;
                 if(!int.TryParse(_view.TimeFrom, out timeFrom))
                 {
                     _messegeService.ShowExclamation("Введите корректное значение времени между постами");
@@ -98,6 +106,8 @@ namespace Instagram2VK.Presenters
                 vkItems = vkItems.Where(item =>
                    !item.Text.Contains("www") && !item.Text.Contains("http") &&
                    !item.Text.Contains(".blog"));
+
+                groupId = _mainService.GetDomainString(groupId);
 
                 await _vkService.SetWallAsync(groupId, access_token, timeFrom, timeTo, vkItems);
             }
@@ -168,8 +178,32 @@ namespace Instagram2VK.Presenters
             try
             {
                 _view.ToggleBtnLoadContent = false;
+                InstagramLoadViewModel contentLoad = null;
 
-                var contentLoad = await _instagramService.InstagramLoadAsync(_view.InstagramPage);
+                var instagramPage = _view.InstagramPage;
+                if (string.IsNullOrWhiteSpace(instagramPage))
+                {
+                    _messegeService.ShowExclamation("Укажите страницу инстаграм");
+                    return;
+                }
+
+                if (isNext)
+                {
+                    var queryId = _view.QueryId;
+                    if (string.IsNullOrWhiteSpace(queryId))
+                    {
+                        _messegeService.ShowExclamation("Укажите query_id");
+                        return;
+                    }
+
+                    contentLoad = await _instagramService.InstagramNextAsync(instagramPage, queryId, owner, token);
+                }
+                else
+                {
+                    contentLoad = await _instagramService.InstagramLoadAsync(instagramPage);
+                    isNext = true;
+                }
+
                 if (contentLoad != null)
                 {
                     token = contentLoad.Token;

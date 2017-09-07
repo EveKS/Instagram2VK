@@ -121,7 +121,7 @@ namespace Instagram2VK.Services.VK
             {
                 if (timeFrom != null && timeTo != null)
                 {
-                    addTime = _rnd.Next(timeFrom.Value * 60, timeTo.Value * 60);
+                    addTime = _rnd.Next(timeFrom.Value * 60, timeTo.Value * 60 + 1);
                 }
 
                 count = timeList.Count;
